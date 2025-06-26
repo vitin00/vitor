@@ -312,7 +312,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="container">
-        <a href="listar_clientes.php" class="back-link">← Voltar para lista de clientes</a>
+        <a href="listagem_cliente.php" class="back-link">← Voltar para lista de clientes</a>
         
         <div class="header">
             <h1>Cadastro de Cliente</h1>
@@ -454,4 +454,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const loading = document.getElementById('loading-cep');
             const btnBuscar = document.querySelector('.btn-buscar-cep');
             
-            if
+            if (cep.length === 8) {
+                loading.style.display = 'block';
+                btnBuscar.disabled = true;
+
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const data = await response.json();
+
+                    if (!data.erro) {
+                        document.getElementById('endereco').value = data.logradouro;
+                        document.getElementById('bairro').value = data.bairro;
+                        document.getElementById('cidade').value = data.localidade;
+                        document.getElementById('estado').value = data.uf;
+                    } else {
+                        alert('CEP não encontrado.');
+                    }
+                } catch (error) {
+                    alert('Erro ao buscar CEP.');
+                } finally {
+                    loading.style.display = 'none';
+                    btnBuscar.disabled = false;
+                }
+            } else {
+                alert('Por favor, insira um CEP válido.');
+            }
+        }
+    </script>
+</body>
+</html>

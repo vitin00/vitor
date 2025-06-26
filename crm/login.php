@@ -4,11 +4,11 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-include 'conexao.php'; // Verifique se o caminho está certo
+include 'conexao.php'; // Confirme que esse arquivo está correto
 
 $login_error = '';
 
-// Se já estiver logado, não precisa ver a página de login
+// Se já estiver logado, redireciona para o dashboard
 if (isset($_SESSION['user_id'])) {
     header('Location: dashboard.php');
     exit;
@@ -36,12 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $login_error = 'Email ou senha incorretos.';
         }
     }
-}
-
-// Se não houver erro de login e o usuário não estiver logado, redireciona para a página de cadastro
-if (!$login_error) {
-    // Aqui você pode redirecionar para a página de cadastro
-    // header('Location: cadastro.php'); // Descomente esta linha se quiser redirecionar automaticamente
 }
 ?>
 <!DOCTYPE html>
@@ -113,7 +107,7 @@ if (!$login_error) {
 <body>
     <form method="POST" class="login-container" novalidate>
         <h2>Login</h2>
-        <?php if ($login_error): ?>
+        <?php if (!empty($login_error)): ?>
             <div class="error"><?php echo htmlspecialchars($login_error); ?></div>
         <?php endif; ?>
         <input type="email" name="email" placeholder="Email" required autocomplete="email" />

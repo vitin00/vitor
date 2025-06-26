@@ -9,6 +9,10 @@ if (!isset($_SESSION['user_id'])) {
 
 // Se quiser, pegue o nome do usuário aqui (exemplo usando role)
 $user_role = $_SESSION['role'];
+
+// Redireciona diretamente para o cadastro de cliente
+header('Location: cadastro_cliente.php');
+exit;
 ?>
 
 <!DOCTYPE html>
