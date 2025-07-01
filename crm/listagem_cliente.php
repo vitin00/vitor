@@ -463,33 +463,35 @@ if (isset($_POST['excluir_cliente'])) {
         <?php endif; ?>
 
         <!-- Filtros -->
-        <div class="filters">
-            <h3>Filtros de Busca</h3>
-            <form method="GET">
-                <div class="filter-grid">
-                    <div class="filter-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($filtro_nome); ?>" placeholder="Buscar por nome...">
-                    </div>
-                    <div class="filter-group">
-                        <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($filtro_email); ?>" placeholder="Buscar por email...">
-                    </div>
-                    <div class="filter-group">
-                        <label for="status">Status</label>
-                        <select id="status" name="status">
-                            <option value="">Todos</option>
-                            <option value="ativo" <?php echo $filtro_status === 'ativo' ? 'selected' : ''; ?>>Ativo</option>
-                            <option value="inativo" <?php echo $filtro_status === 'inativo' ? 'selected' : ''; ?>>Inativo</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="filter-buttons">
-                    <button type="submit" class="btn-filtrar">Filtrar</button>
-                    <a href="listar_clientes.php" class="btn-limpar">Limpar Filtros</a>
-                </div>
-            </form>
+<div class="filters">
+    <h3>Filtros de Busca</h3>
+    <form method="GET">
+        <input type="hidden" name="pagina" value="1"> <!-- Para resetar a paginação -->
+        <div class="filter-grid">
+            <div class="filter-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($filtro_nome); ?>" placeholder="Buscar por nome...">
+            </div>
+            <div class="filter-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($filtro_email); ?>" placeholder="Buscar por email...">
+            </div>
+            <div class="filter-group">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="">Todos</option>
+                    <option value="ativo" <?php echo $filtro_status === 'ativo' ? 'selected' : ''; ?>>Ativo</option>
+                    <option value="inativo" <?php echo $filtro_status === 'inativo' ? 'selected' : ''; ?>>Inativo</option>
+                </select>
+            </div>
         </div>
+        <div class="filter-buttons">
+            <button type="submit" class="btn-filtrar">Filtrar</button>
+            <a href="<?php echo basename($_SERVER['PHP_SELF']); ?>" class="btn-limpar">Limpar Filtros</a>
+        </div>
+    </form>
+</div>
+
 
         <!-- Estatísticas -->
         <div class="stats">
@@ -623,3 +625,5 @@ if (isset($_POST['excluir_cliente'])) {
     </div>
 </body>
 </html>
+
+
