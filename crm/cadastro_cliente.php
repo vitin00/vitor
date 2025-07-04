@@ -107,208 +107,211 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Cliente - CRM</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #1a202c;
+        min-height: 100vh;
+        padding: 20px;
+        color: #edf2f7;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #2d3748;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .header h1 {
+        color: #edf2f7;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .header p {
+        color: #a0aec0;
+        font-size: 1.1rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        font-weight: 600;
+        color: #cbd5e0;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+    input, select, textarea {
+        padding: 12px 16px;
+        border: 2px solid #4a5568;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #1a202c;
+        color: #edf2f7;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .cep-group {
+        display: flex;
+        gap: 10px;
+        align-items: end;
+    }
+
+    .cep-group input {
+        flex: 1;
+    }
+
+    .btn-buscar-cep {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s ease;
+    }
+
+    .btn-buscar-cep:hover {
+        background: #5a67d8;
+    }
+
+    .btn-buscar-cep:disabled {
+        background: #4a5568;
+        cursor: not-allowed;
+    }
+
+    .endereco-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 15px;
+    }
+
+    .endereco-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 16px 40px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .messages {
+        margin-bottom: 30px;
+    }
+
+    .error {
+        background: #c53030;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border-left: 4px solid #9b2c2c;
+    }
+
+    .success {
+        background: #2f855a;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border-left: 4px solid #276749;
+    }
+
+    .back-link {
+        display: inline-block;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+        color: #a78bfa;
+    }
+
+    .loading {
+        display: none;
+        color: #667eea;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            padding: 40px;
+            padding: 20px;
+            margin: 10px;
         }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .header h1 {
-            color: #2d3748;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            color: #718096;
-            font-size: 1.1rem;
-        }
-        
+
         .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            grid-template-columns: 1fr;
         }
-        
-        .form-group {
-            display: flex;
+
+        .endereco-grid,
+        .endereco-row {
+            grid-template-columns: 1fr;
+        }
+
+        .cep-group {
             flex-direction: column;
         }
-        
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-        
-        label {
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-        
-        input, select, textarea {
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .cep-group {
-            display: flex;
-            gap: 10px;
-            align-items: end;
-        }
-        
-        .cep-group input {
-            flex: 1;
-        }
-        
-        .btn-buscar-cep {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s ease;
-        }
-        
-        .btn-buscar-cep:hover {
-            background: #5a67d8;
-        }
-        
-        .btn-buscar-cep:disabled {
-            background: #a0aec0;
-            cursor: not-allowed;
-        }
-        
-        .endereco-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 15px;
-        }
-        
-        .endereco-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .btn-submit {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 100%;
-            margin-top: 20px;
-        }
-        
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-        
-        .messages {
-            margin-bottom: 30px;
-        }
-        
-        .error {
-            background: #fed7d7;
-            color: #c53030;
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            border-left: 4px solid #c53030;
-        }
-        
-        .success {
-            background: #c6f6d5;
-            color: #2f855a;
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            border-left: 4px solid #2f855a;
-        }
-        
-        .back-link {
-            display: inline-block;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 20px;
-            transition: color 0.3s ease;
-        }
-        
-        .back-link:hover {
-            color: #5a67d8;
-        }
-        
-        .loading {
-            display: none;
-            color: #667eea;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                margin: 10px;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .endereco-grid,
-            .endereco-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .cep-group {
-                flex-direction: column;
-            }
-        }
-    </style>
+    }
+</style>
+
 </head>
 <body>
     <div class="container">
