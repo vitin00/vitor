@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25/06/2025 às 00:56
+-- Tempo de geração: 04/07/2025 às 07:20
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -113,17 +113,19 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `role` enum('ADM','Supervisor','User') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `cep` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
-(2, 'admin', 'admin@example.com', '$2y$10$bFZHA0eIgDRC1Yxi5bZagOWCZAuOsS2zBTidV9auYb557w5MJdzou', 'ADM', '2025-06-16 18:10:05', '2025-06-16 18:10:05'),
-(3, 'teste01', 'teste01@gmail.com', '$2y$10$bu.frzsHftDqJEtycotCw.uMJuMu8PQ0/vYqKVoB2VvLu3nSDIOmi', 'User', '2025-06-16 18:34:04', '2025-06-16 18:34:04'),
-(4, 'TESTE', 'teste@example.com', '$2y$10$6w8Dv1GdQoerbJwWBcnjAOap7/cxjlF/dLtLcxjPTxW8qGfR.ROlO', 'User', '2025-06-24 22:38:42', '2025-06-24 22:38:42');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`, `updated_at`, `cep`) VALUES
+(2, 'admin', 'admin@example.com', '$2y$10$bFZHA0eIgDRC1Yxi5bZagOWCZAuOsS2zBTidV9auYb557w5MJdzou', 'ADM', '2025-06-16 18:10:05', '2025-06-16 18:10:05', NULL),
+(3, 'teste01', 'teste01@gmail.com', '$2y$10$bu.frzsHftDqJEtycotCw.uMJuMu8PQ0/vYqKVoB2VvLu3nSDIOmi', 'User', '2025-06-16 18:34:04', '2025-06-16 18:34:04', NULL),
+(4, 'TESTE', 'teste@example.com', '$2y$10$6w8Dv1GdQoerbJwWBcnjAOap7/cxjlF/dLtLcxjPTxW8qGfR.ROlO', 'User', '2025-06-24 22:38:42', '2025-06-24 22:38:42', NULL),
+(5, 'Neymar', 'neymar123@gmail.com', '$2y$10$H.pumxolKGIWHzXS1LwdGOYicMM77GoGNhbf4hiWL55Kcx.2LLJxS', 'User', '2025-07-04 05:17:40', '2025-07-04 05:17:40', '57020-05');
 
 --
 -- Índices para tabelas despejadas
@@ -204,7 +206,7 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restrições para tabelas despejadas
